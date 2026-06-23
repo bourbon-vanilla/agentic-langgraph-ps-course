@@ -10,6 +10,8 @@
 - Never assume design, tech stack or features
 - Use deep-dive sub-agents to assist with research
 - Use deep-dive sub-agents to review the different aspects of your plan before presenting it to the user
+- Install skills using the `npx skill add ...` command for tech stacks, libraries, frameworks, and tools we use in the project
+- Store plans in md files in `.agents/plans` directory and use them to track progress and changes
 
 ## CHANGE / EDIT MODE
 
