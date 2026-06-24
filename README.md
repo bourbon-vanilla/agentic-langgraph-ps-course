@@ -1,5 +1,7 @@
 # Langgraph Pluralsight Course
 
+__Pluralsight Course Link__: [LangGraph Essentials for Developers](https://app.pluralsight.com/library/courses/langgraph-essentials-developers)
+
 ## Project Overview
 
 This project contains the codebase for a Pluralsight course on **LangGraph**. It covers building LLM-powered workflows and agents using LangGraph, LangChain, and OpenAI.
