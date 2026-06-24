@@ -1,4 +1,5 @@
 # Demonstrates a tool-aware chatbot where the LLM requests tools and the workflow executes them 
+import os
 
 from typing import TypedDict, Annotated
 from langgraph.graph import add_messages, StateGraph, START, END
@@ -27,7 +28,11 @@ def sub(a: int, b: int) -> int:
     """Return the difference of two numbers."""
     return a - b
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 tools = [tavily_tool, add, sub]
 llm_with_tools = llm.bind_tools(tools)
@@ -61,7 +66,7 @@ graph_builder.add_node("chatbot", chatbot)
 graph_builder.add_node("tool_node", tool_node)
 
 graph_builder.add_edge(START, "chatbot")
-graph_builder.add_conditional_edges("chatbot",should_continue,{"invoke tools": "tool_node","end": END} )                                   
+graph_builder.add_conditional_edges("chatbot", should_continue, {"invoke tools": "tool_node","end": END} )                                   
 graph_builder.add_edge("tool_node", END)
 
 graph = graph_builder.compile()

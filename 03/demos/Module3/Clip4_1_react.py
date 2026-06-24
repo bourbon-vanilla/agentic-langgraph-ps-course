@@ -1,4 +1,5 @@
 # Demonstrates a complete agent workflow with LLM decision-making, tool execution, and iterative reasoning
+import os
 
 from typing import TypedDict, Annotated
 from langgraph.graph import add_messages, StateGraph, START, END
@@ -26,8 +27,11 @@ def add(a: int, b: int) -> int:
 def sub(a: int, b: int) -> int:
     """Return the difference of two numbers."""
     return a - b
-
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 tools = [tavily_tool, add, sub]
 llm_with_tools = llm.bind_tools(tools)

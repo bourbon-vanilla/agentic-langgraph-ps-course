@@ -1,4 +1,5 @@
 # A multi-agent system where a controller agent delegates tasks to specialized math and research agents
+import os
 
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -8,7 +9,11 @@ from langchain.agents import create_agent
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 # =======================
 # Sub-Agent 1: Math Agent
