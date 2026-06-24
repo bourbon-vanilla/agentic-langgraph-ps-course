@@ -1,5 +1,6 @@
 # Smart Email Support Assistant - Conditional Routing Example
 # Returning labels from routing function 
+import os
 
 from langgraph.graph import StateGraph, START, END
 from langchain_openai import ChatOpenAI
@@ -7,7 +8,11 @@ from typing import TypedDict
 from dotenv import load_dotenv
 
 load_dotenv()
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 class SupportState(TypedDict):
     email_text: str

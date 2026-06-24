@@ -1,4 +1,5 @@
 # Job Application Assistant – Running Parallel Analyses
+import os
 
 from langgraph.graph import StateGraph, START, END
 from langchain_openai import ChatOpenAI
@@ -15,7 +16,11 @@ class ScreeningState(TypedDict):
     interview_questions: str
     screening_report: str
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 def extract_strengths(state: ScreeningState) :
     response = llm.invoke(f"""

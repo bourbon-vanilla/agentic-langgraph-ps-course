@@ -1,4 +1,5 @@
 # Safe Iterative Rewrite Workflow: Auto-Stop After 3 Evaluation Cycles
+import os
 
 from typing import TypedDict, Literal
 from pydantic import BaseModel, Field
@@ -9,7 +10,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 class State(TypedDict):
     topic: str
@@ -80,4 +85,4 @@ with open("evaluator_graph_safe.png", "wb") as f:
 initial_state = {"topic": "Personal Branding for Creators",  "attempts": 0}
 final_state = graph.invoke(initial_state)
 
-print("Final LinkedIn Post:\n", final_state["post"])
+print(f"\nFinal LinkedIn Post ({final_state['attempts']} attempts):\n----------------------------------\n\n{final_state['post']}")

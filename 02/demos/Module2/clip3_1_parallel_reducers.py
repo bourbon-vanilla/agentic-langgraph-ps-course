@@ -1,11 +1,12 @@
 # Job Application Assistant – Running Parallel Analyses
 # Added a candidate score 
+import os
+import operator
 
 from langgraph.graph import StateGraph, START, END
 from langchain_openai import ChatOpenAI
 from typing import TypedDict, Annotated
 from dotenv import load_dotenv
-import operator
 from pydantic import BaseModel, Field
 
 load_dotenv()  
@@ -28,7 +29,11 @@ class WeaknessesOutput(BaseModel):
     weaknesses: str = Field(..., description="Candidate's key weaknesses or skill gaps")
     candidate_score: float = Field(..., ge=-1, le=0, description="Score between -1 and 0 indicating weakness severity")
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 # Create structured LLM wrappers
 structured_strengths_llm = llm.with_structured_output(StrengthsOutput)

@@ -1,5 +1,7 @@
 # Sequential workflow using an LLM to generate a passage, key points, and quiz questions.
 
+import os
+
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
 from langchain_openai import ChatOpenAI
@@ -13,7 +15,11 @@ class WorkflowState(TypedDict):
     key_points: str  
     questions: str   
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 def generate_passage(state: WorkflowState):
     topic = state["topic"]

@@ -1,4 +1,5 @@
 # Iterative Workflow: Generate, Evaluate, and Improve a LinkedIn Post
+import os
 
 from typing import TypedDict, Literal
 from pydantic import BaseModel, Field
@@ -9,7 +10,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 class State(TypedDict):
     topic: str
