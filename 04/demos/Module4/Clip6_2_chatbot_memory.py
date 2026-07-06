@@ -1,5 +1,6 @@
 # Chatbot with Memory
 
+import os
 import warnings 
 warnings.filterwarnings("ignore", category=UserWarning, module="langchain_tavily")
 
@@ -32,7 +33,11 @@ def sub(a: int, b: int) -> int:
     """Return the difference of two numbers."""
     return a - b
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 tools = [tavily_tool, add, sub]
 llm_with_tools = llm.bind_tools(tools)
