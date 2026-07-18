@@ -1,5 +1,6 @@
 # HITL approval workflow using Command for routing and updates
 # Using Command in clip6_1_tweet_feedback.py
+import os
 
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, add_messages, START, END
@@ -17,7 +18,11 @@ class State(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]
     feedback: str  
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 def create_tweet(state: State):
     response = llm.invoke([

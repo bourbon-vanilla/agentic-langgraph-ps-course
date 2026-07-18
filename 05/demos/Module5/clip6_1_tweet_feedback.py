@@ -1,4 +1,5 @@
 # # Human approval loop with feedback 
+import os
 
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, add_messages, START, END
@@ -17,7 +18,11 @@ class State(TypedDict):
     approval: str
     feedback: str
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 def create_tweet(state: State):
     response = llm.invoke([
