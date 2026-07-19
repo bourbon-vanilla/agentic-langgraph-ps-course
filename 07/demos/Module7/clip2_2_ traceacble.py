@@ -18,7 +18,11 @@ class ScreeningState(TypedDict):
     interview_questions: str
     screening_report: str
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(
+    model=os.environ["CUSTOM_OPENAI_MODEL"],
+    base_url=os.environ["CUSTOM_OPENAI_ENDPOINT"],
+    api_key=os.environ["CUSTOM_OPENAI_API_KEY"],
+)
 
 # Helper function for identifying key interview skill areas
 @traceable
