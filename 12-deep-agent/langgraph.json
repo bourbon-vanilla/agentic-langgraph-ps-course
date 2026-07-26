@@ -3,5 +3,5 @@
   "graphs": {
     "agent": "./src/agent.py:agent"
   },
-  "env": ".env"
+  "env": "local.env"
 }
