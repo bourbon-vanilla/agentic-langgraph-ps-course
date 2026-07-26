@@ -9,7 +9,7 @@ services:
         GIT_REPO_BRANCH: ${GIT_REPO_BRANCH:-main}
     container_name: agent-chat-ui
     ports:
-      - "3000:3000"
+      - "${CHAT_UI_PORT}:3000"
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
       NEXT_PUBLIC_ASSISTANT_ID: ${NEXT_PUBLIC_ASSISTANT_ID}
