@@ -11,4 +11,5 @@ wheels/
 
 # Other files
 **/*.env
-.agents/
+**/.langgraph_api/
+`.agents/
