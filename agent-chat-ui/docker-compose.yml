@@ -1,0 +1,18 @@
+services:
+  agent-chat-ui:
+    image: agent-chat-ui:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GIT_REPO_URL: ${GIT_REPO_URL:-https://github.com/langchain-ai/agent-chat-ui.git}
+        GIT_REPO_BRANCH: ${GIT_REPO_BRANCH:-main}
+    container_name: agent-chat-ui
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NEXT_PUBLIC_ASSISTANT_ID: ${NEXT_PUBLIC_ASSISTANT_ID}
+      NEXT_PUBLIC_AUTH_SCHEME: ${NEXT_PUBLIC_AUTH_SCHEME}
+      LANGSMITH_API_KEY: ${LANGSMITH_API_KEY}
+    restart: unless-stopped
