@@ -15,4 +15,11 @@ services:
       NEXT_PUBLIC_ASSISTANT_ID: ${NEXT_PUBLIC_ASSISTANT_ID}
       NEXT_PUBLIC_AUTH_SCHEME: ${NEXT_PUBLIC_AUTH_SCHEME}
       LANGSMITH_API_KEY: ${LANGSMITH_API_KEY}
+    networks:
+      - agentic-net
     restart: unless-stopped
+
+networks:
+  agentic-net:
+    external: true
+    name: agentic-net

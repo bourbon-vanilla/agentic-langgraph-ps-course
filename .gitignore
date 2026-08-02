@@ -12,4 +12,5 @@ wheels/
 # Other files
 **/*.env
 **/.langgraph_api/
-`.agents/
+.agents/
+.vscode/mcp.json
